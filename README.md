@@ -3,7 +3,11 @@ A [Go](https://golang.org/) experimentation project to replicate the wonderful w
 ## Installation:
 
     go get github.com/smugcloud/cerebro
-    
+
+## Usage
+
+    cerebro check -p udp -r google.com:80
+
 ## Current features:
 
   * Test a network connection to a remote host, via UDP.
