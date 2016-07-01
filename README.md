@@ -10,4 +10,4 @@ A [Go](https://golang.org/) experimentation project to replicate the wonderful w
 
 ## Current features:
 
-  * Test a network connection to a remote host, via UDP.
+  * Test a network connection to a remote host, via UDP or TCP.

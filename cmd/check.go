@@ -16,44 +16,43 @@ package cmd
 
 import (
 	"fmt"
-	"net"
 	"log"
+	"net"
 	"os"
+
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
+
 var prot string
 var remote string
+
 // checkCmd represents the check command
 var checkCmd = &cobra.Command{
 	Use:   "check",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Verify if you can connect to a remote host.",
+	Long:  `Attempt to connect to a remote host using a specified port.  This is useful for network troubleshooting and validation.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// TODO: Work your own magic here
-		if prot == "" || remote == ""{
-		fmt.Println("ERROR: Both a protocol and remote host are required for this operation")
-		os.Exit(1)
-	}
+		if prot == "" || remote == "" {
+			color.Red("ERROR: Both a protocol and remote host are required for this operation")
+			os.Exit(1)
+		}
 		if prot == "udp" {
-		addr, err := net.ResolveUDPAddr(prot, remote)
-		if err != nil {
-			log.Printf("There was a problem: %s\n", err)
+			addr, err := net.ResolveUDPAddr(prot, remote)
+			if err != nil {
+				log.Printf("There was a problem: %s\n", err)
+			} else {
+				fmt.Println("UDP Connection successful!  Remote IP is: ", addr)
+			}
 		} else {
-			fmt.Println("UDP Connection successful!  Remote IP is: ", addr)
+			addr, err := net.ResolveTCPAddr(prot, remote)
+			if err != nil {
+				log.Printf("There was a problem: %s\n", err)
+			} else {
+				fmt.Println("TCP Connection successful!  Remote IP is: ", addr)
+			}
 		}
-	} else {
-		addr, err := net.ResolveTCPAddr(prot, remote)
-		if err != nil {
-			log.Printf("There was a problem: %s\n", err)
-		} else {
-			fmt.Println("TCP Connection successful!  Remote IP is: ", addr)
-		}
-	}
 	},
 }
 
