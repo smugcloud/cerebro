@@ -15,8 +15,6 @@
 package cmd
 
 import (
-	"fmt"
-	"log"
 	"net"
 	"os"
 
@@ -41,16 +39,16 @@ var checkCmd = &cobra.Command{
 		if prot == "udp" {
 			addr, err := net.ResolveUDPAddr(prot, remote)
 			if err != nil {
-				log.Printf("There was a problem: %s\n", err)
+				color.Red("There was a problem: %s\n", err)
 			} else {
-				fmt.Println("UDP Connection successful!  Remote IP is: ", addr)
+				color.Green("UDP Connection successful!  Remote IP is: %s\n", addr)
 			}
 		} else {
 			addr, err := net.ResolveTCPAddr(prot, remote)
 			if err != nil {
-				log.Printf("There was a problem: %s\n", err)
+				color.Red("There was a problem: %s\n", err)
 			} else {
-				fmt.Println("TCP Connection successful!  Remote IP is: ", addr)
+				color.Green("TCP Connection successful!  Remote IP is: %s\n", addr)
 			}
 		}
 	},
